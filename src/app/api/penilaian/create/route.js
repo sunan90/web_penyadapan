@@ -45,7 +45,7 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Failed to insert data' }, { status: 500 });
     }
 
-    return NextResponse.json(data[0]);
+    return NextResponse.json({data:'berhasil'});
   } catch (error) {
     console.error('Error in POST /api/penilaian:', error);
     return NextResponse.json({ error: 'An error occurred' }, { status: 500 });

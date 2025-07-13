@@ -30,43 +30,55 @@ export default function Page() {
   };
 const pointOptions = {
     luka_kayu: [
-      { label: "Luka Kecil (2 Poin)", value: 2 },
+      { label: "Tidak Ada (0 Poin)", value: 3 },
+      { label: "Luka Kecil (3 Poin)", value: 3 },
       { label: "Luka Sedang (5 Poin)", value: 5 },
-      { label: "Luka Besar (10 Poin)", value: 10 },
+      { label: "Luka Besar (7 Poin)", value: 7 },
     ],
     kedalaman_sadap: [
       { label: "Dangkal (2 Poin)", value: 2 },
-      { label: "Cukup (5 Poin)", value: 5 },
-      { label: "Dalam (10 Poin)", value: 10 },
+      { label: "Normatif (0 Poin)", value: 0 },
+      { label: "Rapat (4 Poin)", value: 4 },
     ],
     pemakaian_kulit: [
-      { label: "Sedikit (2 Poin)", value: 2 },
-      { label: "Normal (5 Poin)", value: 5 },
-      { label: "Berlebihan (10 Poin)", value: 10 },
+      { label: "Boros (6 Poin)", value: 6 },
+      { label: "Sangat Boros (10 Poin)", value: 10 },
+      // { label: "Berlebihan (10 Poin)", value: 10 },
     ],
     teknik_ska: [
-      { label: "Salah (5 Poin)", value: 5 },
-      { label: "Benar (0 Poin)", value: 0 },
+      { label: "Tidak Pakai Tangga (3 Poin)", value: 3 },
+      { label: "Tidak Pakai Pacekung (5 Poin)", value: 5 },
+      { label: "Sotokan (7 Poin)", value: 7 },
     ],
     irisan_sadap: [
-      { label: "Salah (5 Poin)", value: 5 },
-      { label: "Benar (0 Poin)", value: 0 },
+      { label: "IMDB (2 Poin)", value: 2 },
+      { label: "IMBB (2 Poin)", value: 2 },
+      { label: "ITSBD (2 Poin)", value: 2 },
+      { label: "ITSBB (2 Poin)", value: 2 },
+      { label: "TAS (5 Poin)", value: 5 },
+      { label: "TAP (5 Poin)", value: 5 },
+      { label: "TEBAL TATAL (10 Poin)", value: 10 },
+      // { label: "Benar (0 Poin)", value: 0 },
     ],
     sudut_sadap: [
-      { label: "Salah (5 Poin)", value: 5 },
-      { label: "Benar (0 Poin)", value: 0 },
+      { label: ">45 Derajat (3 Poin)", value: 3 },
+      { label: "<35 Derajat (3 Poin)", value:  3},
+      { label: "Bergelombang (2 Poin)", value: 2 },
+      // { label: "Benar (0 Poin)", value: 0 },
     ],
     pengambilan_scrap: [
-      { label: "Salah (5 Poin)", value: 5 },
-      { label: "Benar (0 Poin)", value: 0 },
+      { label: "Diambil (5 Poin) (5 Poin)", value: 0 },
+      { label: "Tidak diambil (2 Poin)", value: 2 },
     ],
     peralatan_tidak_lengkap: [
-      { label: "Ya (5 Poin)", value: 5 },
-      { label: "Tidak (0 Poin)", value: 0 },
+      { label: "Talang (2 Poin) ", value: 2 },
+      { label: "Mangkok (3 Poin)", value: 3},
+      { label: "Talang Pancing (1 Poin)", value: 1 },
     ],
     kebersihan_alat: [
-      { label: "Kotor (5 Poin)", value: 5 },
-      { label: "Bersih (0 Poin)", value: 0 },
+      { label: "Talang (1 Poin)", value: 1 },
+      { label: "Mangkok (1 Poin)", value: 1 },
+      { label: "Ember kolotan (2 Poin)", value: 2 },
     ],
     pohon_tidak_disadap: [
       { label: "Ya (10 Poin)", value: 10 },
@@ -77,7 +89,7 @@ const pointOptions = {
       { label: "Tidak (0 Poin)", value: 0 },
     ],
     talang_sadap_mampet: [
-      { label: "Ya (5 Poin)", value: 5 },
+      { label: "Ya (1 Poin)", value: 1 },
       { label: "Tidak (0 Poin)", value: 0 },
     ],
   };
