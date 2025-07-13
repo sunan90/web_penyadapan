@@ -1,0 +1,125 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('/images/gmb.JPG'); /* Ganti dengan URL foto background */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.237);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgb(0, 251, 25);
+    width: 100%;
+    max-width: 500px; /* Lebar maksimum untuk form */
+    max-height: 80vh; /* Tinggi maksimum untuk kontainer */
+    text-align: center;
+    overflow-y: auto; /* Izinkan gulir vertikal */
+    overflow-x: hidden; /* Sembunyikan gulir horizontal jika ada */
+    backdrop-filter: blur(3px); /* Tambahkan efek blur */
+    -webkit-backdrop-filter: blur(2px); /* Untuk Safari */
+}
+
+.logo img {
+    max-width: 20%; /* Atur lebar maksimum logo menjadi 80% dari kontainer */
+    height: auto; /* Memastikan tinggi disesuaikan dengan lebar */
+    margin-bottom: 20px; /* Menambahkan jarak di bawah logo */
+}
+
+h1, h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+input, select {
+    width: 100%;
+    /* color:black; */
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+/* Footer with Scrolling Text */
+.footer {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    z-index: 10; /* Pastikan footer tidak tertutup oleh elemen lain */
+}
+
+.footer p {
+    display: inline-block;
+    white-space: nowrap;
+    animation: scrollText 10s linear infinite;
+    font-size: 16px; /* Atur ukuran font sesuai kebutuhan */
+}
+
+@keyframes scrollText {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/* Tambahan untuk form_tap */
+.form-section {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-section label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-section input[type="text"], 
+.form-section input[type="number"], 
+.form-section select {
+    width: calc(100% - 22px); /* Mengurangi padding dan border */
+}
+
+.form-section textarea {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: vertical; /* Memungkinkan resize vertikal */
+}
