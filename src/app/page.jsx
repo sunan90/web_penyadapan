@@ -1,10 +1,12 @@
 "use client"
 import Image from "next/image";
 import '@/app/App.css'
+import { useRouter } from "next/navigation";
 import supabase from "./lib/supabaseClient";
 import { useState } from "react";
 
 export default function Home() {
+  const router = useRouter()
     const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -19,6 +21,8 @@ export default function Home() {
       alert('Login gagal: ' + error.message);
     } else {
       alert('Login berhasil!');
+      router.push('/dashboard')
+      
       console.log(data);
       localStorage.setItem('user_id', user.id);
 

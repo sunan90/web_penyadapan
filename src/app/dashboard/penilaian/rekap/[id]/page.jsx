@@ -143,6 +143,7 @@ const pointOptions = {
 
   return (
     <div className="p-4">
+      {console.log(rekap  )}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         {rekap.tabel_blok.tabel_pohon.map((pohon) => (
           <PohonCard

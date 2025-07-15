@@ -131,7 +131,7 @@ export default function RekapPage() {
               <th>Nama Penilai</th>
               <th>Tanggal Penilaian</th>
               <th>Total Score</th>
-              <th>Tambah Penilaian</th>
+              <th>Detail Penilaian</th>
             </tr>
           </thead>  
           <tbody>
@@ -143,7 +143,7 @@ export default function RekapPage() {
                 <td>{rek.penilai?.nama_penilai || '-'}</td>
                 <td>{rek.tanggal_penilaian}</td>
                 <td>{rek.total_score ?? '-'}</td>
-                <td><a href={`/dashboard/penilaian/rekap/${rek.id}`} className='btn btn-success'>Tambah Penilaian</a></td>
+                <td><a href={`/dashboard/penilaian/rekap/${rek.id}`} className='btn btn-success'>Lihat Nilai</a></td>
               </tr>
             ))}
           </tbody>
