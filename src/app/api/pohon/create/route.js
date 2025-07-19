@@ -5,8 +5,9 @@ export async function POST(request) {
   try {
     const body = await request.json();
     const { nama_pohon,id_blok } = body;
+    console.log(body)
     // console.log(id_blok, id_penilai, id_penyadap, total_score, tanggal_penilaian)
-
+    
     // Validasi awal (opsional tapi disarankan)
     if (!id_blok || !nama_pohon) {
       return NextResponse.json({ message: 'Data tidak lengkap' }, { status: 400 });
@@ -19,6 +20,9 @@ export async function POST(request) {
         nama_pohon,
         
       });
+
+    // console.log(error)
+    
 
 
 

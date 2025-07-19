@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 import { FiEdit2, FiTrash2, FiPlus, FiSearch } from 'react-icons/fi'
 import { useRouter } from 'next/navigation'
 
+// import { revalidateTag } from 'next/cache'
+
 export default function PohonPage() {
 
     const router = useRouter()
@@ -46,46 +48,26 @@ export default function PohonPage() {
     setFormData(prev => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = async (e) => {
+   const handleSubmit = async (e) => {
     e.preventDefault()
-    
-    const endpoint = editMode 
-      ? `/api/pohon/update/${currentPohonId}`
-      : '/api/pohon/create'
-      
-    const method = editMode ? 'PATCH' : 'POST'
-
     try {
-      const res = await fetch(endpoint, {
-        method,
+      const res = await fetch(editMode ? `/api/pohon/update/${currentPohonId}` : '/api/pohon/create', {
+        method: editMode ? 'PATCH' : 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       })
-
+      
       const result = await res.json()
-
-      if (res.ok) {
-          alert(result.message)
-          router.push('/dashboard/pohon')
-        // Update UI
-        if (editMode) {
-          setPohonList(pohonList.map(p => 
-            p.id === currentPohonId ? { ...p, ...formData } : p
-          ))
-        } else {
-          setPohonList([...pohonList, result.data])
-        }
-
-
-        // Reset form
-        // setFormData({ nama_pohon: '', id_blok: '' })
-        // setEditMode(false)
-        // setCurrentPohonId(null)
-        
-      }
-
+      if (!res.ok) throw new Error(result.message || 'Gagal menyimpan data')
+      
+      alert(result.message)
+        window.location.reload(); // Force refresh halaman
+      // router.refresh() // Me-refresh halaman untuk mendapatkan data terbaru
+      
     } catch (error) {
-      alert('Terjadi kesalahan')
+      alert(error.message || 'Terjadi kesalahan')
+    } finally {
+      document.getElementById('pohon-modal')?.close()
     }
   }
 
