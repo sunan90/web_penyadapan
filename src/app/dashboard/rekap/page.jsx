@@ -11,6 +11,8 @@ export default function RekapPage() {
   const [selectedBlok, setSelectedBlok] = useState('')
   const [selectedPenyadap, setSelectedPenyadap] = useState('')
   const [tanggal, setTanggal] = useState('')
+  const [editingId, setEditingId] = useState(null)
+
   const [totalScore, setTotalScore] = useState(0)
 
   useEffect(() => {
@@ -22,14 +24,26 @@ export default function RekapPage() {
       .then(res => res.json())
       .then(data => setUser(data.user || []))
 
-    fetch('/api/get-rekap/all')
-      .then(res => res.json())
-      .then(data => setRekap(data.data || []))
+    fetchData()
 
     fetch('/api/get-penyadap/all')
       .then(res => res.json())
       .then(data => setPenyadapList(data.data || []))
   }, [])
+
+  const fetchData = async () => {
+    const res = await fetch('/api/get-rekap/all')
+    const data = await res.json()
+    setRekap(data.data || [])
+  }
+
+  const resetForm = () => {
+    setSelectedBlok('')
+    setSelectedPenyadap('')
+    setTanggal('')
+    setTotalScore(0)
+    setEditingId(null)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -42,32 +56,65 @@ export default function RekapPage() {
       id_penilai: user.id
     }
 
-    const res = await fetch('/api/get-rekap/create', {
-      method: 'POST',
+    const endpoint = editingId
+      ? `/api/get-rekap/update/${editingId}`
+      : '/api/get-rekap/create'
+
+    const res = await fetch(endpoint, {
+      method: editingId ? 'PUT' : 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
     })
 
     const result = await res.json()
     alert(result.message || 'Berhasil disimpan')
-    document.getElementById('my_modal_1').close()
+    document.getElementById('rekap_modal').close()
+    fetchData()
+    resetForm()
+  }
+
+  const handleDelete = async (id) => {
+    if (!confirm('Yakin ingin menghapus?')) return
+
+    const res = await fetch(`/api/get-rekap/delete/${id}`, {
+      method: 'DELETE',
+    })
+
+    const result = await res.json()
+    alert(result.message || 'Berhasil dihapus')
+    fetchData()
+  }
+
+  const handleEdit = (rek) => {
+    setEditingId(rek.id)
+    setSelectedBlok(rek.id_blok)
+    setSelectedPenyadap(rek.id_penyadap)
+    setTanggal(rek.tanggal_penilaian)
+    setTotalScore(rek.total_score)
+    document.getElementById('rekap_modal').showModal()
   }
 
   return (
     <div>
       <h1 className="text-5xl mb-4">Perekapan</h1>
+      {console.log(user)}
 
       <button
         className="btn mb-4"
-        onClick={() => document.getElementById('my_modal_1').showModal()}
+        onClick={() => {
+          resetForm()
+          document.getElementById('rekap_modal').showModal()
+        }}
       >
         Tambah Perekapan
       </button>
 
       {/* MODAL */}
-      <dialog id="my_modal_1" className="modal">
+      <dialog id="rekap_modal" className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Tambah Rekap Penilaian</h3>
+          <h3 className="font-bold text-lg">
+            {editingId ? 'Edit Rekap Penilaian' : 'Tambah Rekap Penilaian'}
+          </h3>
           <form onSubmit={handleSubmit} className="space-y-4 mt-4">
             <div>
               <label className="block mb-1">Blok</label>
@@ -110,9 +157,23 @@ export default function RekapPage() {
               />
             </div>
 
+            <div>
+              <label className="block mb-1">Total Score</label>
+              <input
+                type="number"
+                className="input input-bordered w-full"
+                value={totalScore}
+                onChange={(e) => setTotalScore(e.target.value)}
+                required
+              />
+            </div>
+
             <div className="modal-action">
               <button type="submit" className="btn btn-primary">Simpan</button>
-              <button type="button" className="btn" onClick={() => document.getElementById('my_modal_1').close()}>
+              <button type="button" className="btn" onClick={() => {
+                resetForm()
+                document.getElementById('rekap_modal').close()
+              }}>
                 Batal
               </button>
             </div>
@@ -122,28 +183,47 @@ export default function RekapPage() {
 
       {/* TABEL */}
       <div className="overflow-x-auto">
-        <table className="table   table-success w-full">
+        <table className="table table-success w-full">
           <thead>
             <tr>
-              <th >No</th>
+              <th>No</th>
               <th>Nama Blok</th>
               <th>Nama Penyadap</th>
               <th>Nama Penilai</th>
               <th>Tanggal Penilaian</th>
               <th>Total Score</th>
-              <th>Detail Penilaian</th>
+              <th>Aksi</th>
             </tr>
-          </thead>  
+          </thead>
           <tbody>
             {rekap.map((rek, index) => (
               <tr key={rek.id}>
                 <td>{index + 1}</td>
                 <td>{rek.tabel_blok?.nama_blok || '-'}</td>
                 <td>{rek.tabel_penyadap?.nama_penyadap || '-'}</td>
-                <td>{rek.penilai?.nama_penilai || '-'}</td>
+                <td>{rek.profiles?.nama_penilai || '-'}</td>
                 <td>{rek.tanggal_penilaian}</td>
                 <td>{rek.total_score ?? '-'}</td>
-                <td><a href={`/dashboard/penilaian/rekap/${rek.id}`} className='btn btn-success'>Lihat Nilai</a></td>
+                <td className="flex gap-2">
+                  <button
+                    onClick={() => handleEdit(rek)}
+                    className="btn btn-warning btn-sm"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(rek.id)}
+                    className="btn btn-error btn-sm"
+                  >
+                    Hapus
+                  </button>
+                  <a
+                    href={`/dashboard/penilaian/rekap/${rek.id}`}
+                    className="btn btn-success btn-sm"
+                  >
+                    Detail
+                  </a>
+                </td>
               </tr>
             ))}
           </tbody>

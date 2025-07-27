@@ -15,7 +15,10 @@ export async function GET() {
       tabel_penyadap (
         id,
         nama_penyadap
-      )
+      ),
+        profiles (
+       nama_penilai 
+        )
     `);
 
   if (error) {

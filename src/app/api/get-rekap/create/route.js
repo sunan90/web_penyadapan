@@ -15,7 +15,7 @@ export async function POST(request) {
     const { error } = await supabase
       .from('tabel_rekap_penilaian')
       .insert({
-        id_blok,
+      id_blok,
         id_penilai,
         id_penyadap,
         total_score: total_score === '' ? null : total_score, // handle jika kosong
