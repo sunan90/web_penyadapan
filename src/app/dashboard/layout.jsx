@@ -52,6 +52,7 @@ export default function DashboardLayout({ children }) {
                 { path: "/dashboard/pohon", icon: "🌳", name: "Pohon" },
                 { path: "/dashboard/rekap", icon: "📋", name: "Rekap Penilaian" },
                 { path: "/dashboard/blok", icon: "🛣️", name: "Blok" },
+                { path: "/dashboard/penyadap", icon: "👤", name: "Penyadap" },
               ].map((item) => (
                 <li key={item.path}>
                   <a
